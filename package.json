@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "http://localhost:5003",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,6 +14,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "openai": "^4.68.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

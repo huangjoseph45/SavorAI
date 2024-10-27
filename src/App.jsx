@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import MainWindow from "./components/main-window";
 import InputBar from "./components/input-bar";
-import fetchAPIResponse from "./modules/language-model";
 import DeleteButton from "./components/delete-button";
 import PromotionalBanner from "./components/self-plug-banner";
-import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -49,17 +47,44 @@ function App() {
         ]);
         setIsLoading(true);
 
-        const apiResponse = await fetchAPIResponse(message, messageQueries);
-        setIsLoading(false);
+        try {
+          const res = await fetch("http://localhost:5003/api/openai", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              message: message,
+              messageList: messageQueries,
+            }),
+          });
 
-        setMessageQueries((prevMessages) => [...prevMessages, apiResponse]);
+          const data = await res.json();
+          console.log(data);
+
+          setMessageQueries((prevMessages) => [
+            ...prevMessages,
+            { role: "assistant", content: data.message }, // Assuming `data.message` is the response text
+          ]);
+        } catch (error) {
+          console.error("Error fetching API response:", error);
+          setMessageQueries((prevMessages) => [
+            ...prevMessages,
+            {
+              role: "assistant",
+              content: "Something went wrong. Please try again.",
+            },
+          ]);
+        }
+
+        setIsLoading(false);
       }
 
       setCheckSubmit(false);
     }
 
     getAPIResponse();
-  }, [checkSubmit, inputValue]);
+  }, [checkSubmit, inputValue, messageQueries]);
 
   useEffect(() => {
     scrollToBottom();
@@ -74,7 +99,7 @@ function App() {
           rel="noopener noreferrer"
         >
           <img
-            src="public/Cooked_Chicken_JE2_BE2.webp"
+            src="public/Melon_Slice_JE2_BE2.webp"
             alt="Cooked Chicken"
             className="icon"
           />

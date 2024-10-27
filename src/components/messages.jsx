@@ -1,33 +1,47 @@
 import { useState } from "react";
+import RecipeTemplate from "./recipe-template";
 
-const insertLineBreakBeforeInstructions = (input) => {
-  return input
-    .replace(/\*\*(Ingredients|Instructions)/g, "<br><br>**$1") // Add line break before "**Instructions" or "**Ingredients"
-    .replace(/(?=\d+\.)/g, "<br>$&") // Add line break before numbered lists
-    .replace(/(?<!\w)-/g, "<br>-"); // Add line break before standalone dashes, avoid breaking hyphenated words
-};
-const Messages = ({ messageQueries, endRef, isLoading }) => {
+const Messages = ({ messageQueries, endRef, isLoading, onClick }) => {
   console.log("Message Queries");
   console.log(messageQueries);
 
   const messages = messageQueries.map((message, index) => {
     if (message.role !== "system") {
-      const formattedContent = insertLineBreakBeforeInstructions(
-        message.content
-      );
-
-      return (
-        <>
+      const formattedContent = message.content;
+      if (message.role === "user")
+        return (
+          <>
+            <li
+              key={index}
+              className="message scale user"
+              dangerouslySetInnerHTML={{ __html: formattedContent }}
+              onClick={() => onClick(message.content)}
+            ></li>
+            <div ref={endRef}></div>
+          </>
+        );
+      else if (
+        !message.content.includes("**") ||
+        message.content ===
+          "Hi! I’m your AI recipe assistant, helping you create delicious meals effortlessly. Just tell me your ingredients or preferences, and I’ll suggest recipes with step by step instructions. Let’s cook something amazing!"
+      )
+        return (
           <li
-            key={index}
-            className={`message ${
-              message.role === "user" ? "user" : "gpt-response"
-            }`}
-            dangerouslySetInnerHTML={{ __html: formattedContent }}
+            key={0}
+            className="message gpt-response scale"
+            onClick={() => onClick(message.content)}
+            dangerouslySetInnerHTML={{ __html: message.content }}
           ></li>
-          <div ref={endRef}></div>
-        </>
-      );
+        );
+      else {
+        return (
+          <RecipeTemplate
+            key={index}
+            recipe={message}
+            onClick={() => onClick(message.content)}
+          />
+        );
+      }
     }
     return null;
   });
