@@ -63,7 +63,7 @@ app.post("/api/openai", async (req, res) => {
           ********
           
           
-          if the user does not require a recipe, ignore this template. You can and will provite nutritional information
+          if the user does not require a recipe, ignore this template. You can and will provite nutritional information. However, if the user states the name of a food, you will priortize giving the recipe over giving nutritional information. Unless the user asks you a specific question, your response should be in the form of a recipe.
 
           ${oldMessages}`,
         },
