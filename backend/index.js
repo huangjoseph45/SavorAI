@@ -59,22 +59,14 @@ app.post("/api/openai", async (req, res) => {
           2.<step 2>
           3.<and so on>
 
-          **Nutritional Information**
-          per serving
-          -<Calories>
-          -<Protein>
-          -<Fats>
-          -<Carbohydrates>
-          -<Total Fiber>
-          -<Total Sugars>
-          -<Sodium>
+
 
 
 
           ********
           
           
-          if the user does not require a recipe, ignore this template. However, if the user states the name of a food, you will priortize giving the recipe over giving nutritional information. If the user input includes the word nutrition, you WILL provide the nutritional info. This is only superceded if the user includes the word recipe. In this case, you will give the recipe following the above format and then provide nutritional information underneath. 
+          if the user does not require a recipe, ignore this template. However, if the user states the name of a food, you will priortize giving the recipe over giving nutritional information. If the user input includes the word nutrition, you WILL provide the nutritional info. This is only superceded if the user includes the word recipe. 
 
           ${oldMessages}`,
         },
