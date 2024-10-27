@@ -36,7 +36,11 @@ const RecipeTemplate = ({ recipe, onClick }) => {
         );
       } else if (type.current === "Ingredients") {
         return <li key={index}>{line}</li>;
-      } else if (type.current === "Instructions" && line.length > 4) {
+      } else if (
+        !isNaN(line[0]) &&
+        type.current === "Instructions" &&
+        line.length > 4
+      ) {
         return <li key={index}>{line}</li>;
       } else if (line.length < 5) {
         const starCount = parseFloat(line); // Convert the line to a float number
@@ -54,6 +58,12 @@ const RecipeTemplate = ({ recipe, onClick }) => {
                 className="star"
               />
             )}
+          </li>
+        );
+      } else if (type.current === "Instructions" && line.length > 5) {
+        return (
+          <li key={index} className="recipe-element-generic">
+            {line}
           </li>
         );
       } else {
