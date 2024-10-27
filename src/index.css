@@ -286,7 +286,6 @@ body {
 }
 
 .recipe-element-generic {
-  margin-top: 1rem;
   font-weight: 600;
 }
 
@@ -299,6 +298,7 @@ h1 {
 h2 {
   font-size: 1.4rem;
   margin: 0.2rem;
+  margin-top: 0.35rem;
 }
 
 .copy-message {

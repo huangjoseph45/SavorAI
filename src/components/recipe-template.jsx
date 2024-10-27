@@ -27,6 +27,12 @@ const RecipeTemplate = ({ recipe, onClick }) => {
             <h1>{line}</h1>
           </li>
         );
+      } else if (line.toLowerCase().includes("nutrition")) {
+        return (
+          <li key={index}>
+            <h2>{line}</h2>
+          </li>
+        );
       } else if (asteriskCount === 4) {
         type.current = line;
         return (
