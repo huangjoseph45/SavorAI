@@ -2,11 +2,11 @@ import { useState } from "react";
 
 const insertLineBreakBeforeInstructions = (input) => {
   return input
-    .replace(/\*\*Instructions/g, "<br><br>**Instructions") // Add line break before "**Instructions"
-    .replace(/(?=\d+\.)|-/g, "<br>$&"); // Handle dashes and numbered lists
+    .replace(/\*\*(Ingredients|Instructions)/g, "<br><br>**$1") // Add line break before "**Instructions" or "**Ingredients"
+    .replace(/(?=\d+\.)/g, "<br>$&") // Add line break before numbered lists
+    .replace(/(?<!\w)-/g, "<br>-"); // Add line break before standalone dashes, avoid breaking hyphenated words
 };
-
-const Messages = ({ messageQueries, endRef }) => {
+const Messages = ({ messageQueries, endRef, isLoading }) => {
   console.log("Message Queries");
   console.log(messageQueries);
 
@@ -32,7 +32,20 @@ const Messages = ({ messageQueries, endRef }) => {
     return null;
   });
 
-  return <ul className="message-list">{messages}</ul>;
+  return (
+    <ul className="message-list">
+      {messages}
+      {isLoading && (
+        <li key="loading" className="message gpt-response">
+          <div className="dots-container">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+          </div>
+        </li>
+      )}
+    </ul>
+  );
 };
 
 export default Messages;

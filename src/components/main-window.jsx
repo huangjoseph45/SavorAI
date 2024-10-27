@@ -1,7 +1,7 @@
 import React from "react";
 import Messages from "./messages";
 
-const MainWindow = ({ messageQueries, endRef }) => {
+const MainWindow = ({ messageQueries, endRef, isLoading }) => {
   console.log(messageQueries);
   window.scrollTo(0, document.body.scrollHeight);
   let latestMessage;
@@ -16,7 +16,11 @@ const MainWindow = ({ messageQueries, endRef }) => {
   }
   return (
     <div className="main-window">
-      <Messages messageQueries={messageQueries} endRef={endRef} />
+      <Messages
+        messageQueries={messageQueries}
+        endRef={endRef}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

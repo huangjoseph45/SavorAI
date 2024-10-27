@@ -15,9 +15,12 @@ const client = new OpenAI({
 async function fetchAPIResponse(message, messageList) {
   let oldMessages =
     "Here are old messages that I have asked you. Use these to influence your responses";
-  messageList.forEach((message) => {
-    oldMessages += ` ${message.content} `;
-  });
+  if (messageList != null && messageList != "undefined") {
+    messageList.forEach((message) => {
+      oldMessages += ` ${message.content} `;
+    });
+  }
+
   console.log(oldMessages);
   console.log(messageList);
   try {
@@ -26,7 +29,7 @@ async function fetchAPIResponse(message, messageList) {
       messages: [
         {
           role: "system",
-          content: `You are a helpful assistant that answers questions in a clear manner. While your sole purpose is to provide tasty and popular recipes to users, you will not give a recipe unless the user specifically asks for one. You will prioritise recipes that are easy to make unless otherwise told. You may never use a dash (-) outside of using it to create a list element. You may also never use numbers in this format (1., 2., 3., and otherwise) unless to create a numbered list. When specifying the words 'ingredients' and 'instructions' as headers you must always use a ** before and after. ${oldMessages}`,
+          content: `You are a helpful assistant that answers any and all questions in a clear manner. Before every recipe, describe it. Never use a hyphen. You may never use a dash (-) outside of using it to create a list element. You may also never use numbers in this format (1., 2., 3., and otherwise) unless to create a numbered list. When specifying the words 'ingredients' and 'instructions' as headers you must always use a ** before and after. ${oldMessages}`,
         },
         { role: "user", content: message },
       ],
