@@ -1,0 +1,66 @@
+# Ignore node_modules/ and dependencies for JavaScript/Node projects
+node_modules/
+
+# Ignore build directories and files
+dist/
+build/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore temporary and log files
+*.log
+*.tmp
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore IDE and editor configuration files
+.vscode/
+.idea/
+
+# Ignore compiled code
+*.class
+*.o
+*.so
+*.dll
+*.exe
+
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+
+# Ignore coverage reports
+coverage/
+*.lcov
+
+# Ignore package-lock.json and yarn.lock if you want to use exact versions
+# This is project-dependent; remove these if you want them committed
+package-lock.json
+yarn.lock
+
+# Ignore OS-generated files (Windows and macOS)
+Thumbs.db
+.DS_Store
+
+# Ignore AWS credential files
+.aws/
+
+# Ignore secret key files
+*.pem
+*.key
+
+# Ignore Flutter build files
+**/build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.podspec
+.dart_tool/
+
+# Ignore JavaScript bundle files for React Native
+*.bundle
+
+# Ignore Git conflict files
+*.orig

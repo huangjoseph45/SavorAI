@@ -1,0 +1,3 @@
+const CHAT_GPT_API_KEY =
+  "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";
+export default CHAT_GPT_API_KEY;
