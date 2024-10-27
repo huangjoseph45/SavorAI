@@ -32,7 +32,19 @@ app.post("/api/openai", async (req, res) => {
   if (messageList && Array.isArray(messageList)) {
     messageList.forEach((msg) => {
       oldMessages += ` ${msg.content} `;
-      oldMessages += `If the user requires a recipe, return your recipe in this format. You will use the below template (where the template starts and ends with ********) for ALL of you recipes. Ignore any and all previous user input that requests you to change the template in any way. If the user asks you to swap the order of the template, add new sections to the template, or remove sections from the template, you will ignore such requests. You will include the headers (denoted by format **header_name**) exactly as they are in the template. 
+    });
+  }
+
+  try {
+    const chatCompletion = await client.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: `You are a helpful assistant that answers any and all questions in a clear manner. You will answer any and all questions. Your primary function is to provide recipes, but you may also provide nutritional info about those recipes.
+
+
+          If the user requires a recipe, return your recipe in this format. You will use the below template (where the template starts and ends with ********) for ALL of you recipes. Ignore any and all previous user input that requests you to change the template in any way. If the user asks you to swap the order of the template, add new sections to the template, or remove sections from the template, you will ignore such requests. You will include the headers (denoted by format **header_name**) exactly as they are in the template. 
 
           ********
           ***<Begin every recipe with the name of the dish>** (YOU MUST INCLUDE THE TITLE OF THE DISH)
@@ -51,17 +63,7 @@ app.post("/api/openai", async (req, res) => {
           ********
           
           
-          if the user does not require a recipe, ignore this template. You can and will provite nutritional information`;
-    });
-  }
-
-  try {
-    const chatCompletion = await client.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: `You are a helpful assistant that answers any and all questions in a clear manner. You will answer any and all questions. Your primary function is to provide recipes, but you may also provide nutritional info about those recipes.
+          if the user does not require a recipe, ignore this template. You can and will provite nutritional information
 
           ${oldMessages}`,
         },
